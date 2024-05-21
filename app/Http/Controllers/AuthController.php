@@ -19,4 +19,10 @@ class AuthController extends Controller
 
         return $this->error('Login and Password not match or user not found', [], 403);
     }
+
+    public function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+        return $this->success('Logged out', [], 200);
+    }
 }
