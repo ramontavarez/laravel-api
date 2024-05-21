@@ -7,11 +7,20 @@ use App\Http\Resources\V1\InvoiceResource;
 use App\Models\Invoice;
 use App\Traits\HttpResponses;
 use Illuminate\Http\Request;
+use Illuminate\Routing\Controllers\HasMiddleware;
+use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Support\Facades\Validator;
 
-class InvoiceController extends Controller
+class InvoiceController extends Controller implements HasMiddleware
 {
     use HttpResponses;
+
+    public static function middleware(): array
+    {
+        return [
+            new Middleware('auth:sanctum', except: ['index', 'show']),
+        ];
+    }
     private $types = ['B', 'C', 'P'];
     /**
      * Display a listing of the resource.
